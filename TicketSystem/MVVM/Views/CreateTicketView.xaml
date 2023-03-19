@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="TicketSystem.MVVM.Views.CreateTicketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TicketSystem.MVVM.Views"
+             xmlns:viewmodels="clr-namespace:TicketSystem.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:CreateTicketViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="0 0 0 30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20" Text="Skapa Ärende" Margin="0 0 0 10" />
+        
+        <StackPanel Grid.Row="1" Width="400" HorizontalAlignment="Left">
+            <TextBlock Text="E-postadress *" />
+            <TextBox Name="tb_Email" Padding="3" Margin="0 0 0 10" />
+
+            <TextBlock Text="Ämne *" />
+            <TextBox Name="tb_Subject" Padding="3" Margin="0 0 0 10" />
+
+            <TextBlock Text="Beskrivning *" />
+            <TextBox Name="tb_Description" Padding="3" Margin="0 0 0 10" TextWrapping="Wrap" AcceptsReturn="True" Height="150" />
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Name="Btn_Send" Click="Btn_Send_Click" Width="100" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Content="SKICKA" Padding="5" />
+                <Button Name="Btn_Cancel" Click="Btn_Cancel_Click" Width="100" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Content="AVBRYT" Padding="5" Command="{Binding Path=NavigateToTicketsViewCommand}" />
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

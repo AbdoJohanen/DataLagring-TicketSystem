@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="TicketSystem.MVVM.Views.TicketsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TicketSystem.MVVM.Views"
+             xmlns:models="clr-namespace:TicketSystem.Models"
+             xmlns:entities="clr-namespace:TicketSystem.Models.Entities"
+             xmlns:viewmodels="clr-namespace:TicketSystem.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TicketsViewModel}"
+             xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="0 0 0 30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20" Text="Alla Ärenden" Margin="0 0 0 10" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- LIST OF TICKETS -->
+            <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Tickets}" Margin="0 0 30 0" HorizontalContentAlignment="Stretch" SelectionMode="Single" SelectedItem="{Binding SelectedTicket}">
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="entities:TicketEntity">
+                        <Grid Margin="0 5 0 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Vertical" Margin="0 0 0 5">
+                                    <TextBlock FontWeight="Bold" Text="Ämne: " />
+                                    <TextBlock TextWrapping="Wrap" MaxWidth="300" Text="{Binding Subject}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                    <TextBlock FontWeight="Bold" Text="Skapad: " />
+                                    <TextBlock Text="{Binding CreatedAt, StringFormat=dd/MM-yyyy HH:mm}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                    <TextBlock FontWeight="Bold" Text="Status: " />
+                                    <TextBlock Text="{Binding Status}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="Användare: " />
+                                    <TextBlock Text="{Binding User.Email}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <Button Name="Btn_Remove" Click="Btn_Remove_Click" Content="&#xf1f8;" Style="{StaticResource navButton}" Height="45" Width="40" Margin="0 5 0 0" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!--SELECTED TICKET INFORMATION-->
+            <StackPanel Grid.Column="1">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedTicket}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBlock Text="Ärende ID:" FontWeight="Bold" Margin="0 0 5 0" />
+                        <TextBlock Text="{Binding SelectedTicket.Id}"/>
+                    </StackPanel>
+                        <TextBlock Grid.Column="1" Text="Ändra status:" FontWeight="Bold" Margin="0 0 5 0" />
+                </Grid>
+
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Skapad:" FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedTicket.CreatedAt, StringFormat=dd/MM-yyyy HH:mm}" Margin="0 0 0 10"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Background="White" Content="Ej påbörjad" Name="Btn_NotStarted" Click="Btn_NotStarted_Click" Margin="0 5 5 5" />
+                        <Button Background="White" Content="Påbörjad" Name="Btn_TicketStarted" Click="Btn_TicketStarted_Click" Margin="0 5 5 5" />
+                        <Button Background="White" Content="Avslutad" Name="Btn_TicketClosed" Click="Btn_TicketClosed_Click" Margin="0 5 0 5" />
+                    </StackPanel>
+                </Grid>
+
+
+                
+                <TextBlock Text="Användare:" FontWeight="Bold" />
+                <TextBlock Text="{Binding SelectedTicket.User.Email}" Margin="0 0 0 10"/>
+                
+                <TextBlock Text="Ämne:" FontWeight="Bold" />
+                <TextBlock TextWrapping="Wrap" MaxWidth="400" Text="{Binding SelectedTicket.Subject}" Margin="0 0 0 10"/>
+
+                <TextBlock Text="Beskrivning:" FontWeight="Bold" />
+                <TextBlock TextWrapping="Wrap" MaxWidth="400" Text="{Binding SelectedTicket.Description}" Margin="0 0 0 10"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
