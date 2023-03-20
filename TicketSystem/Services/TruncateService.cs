@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TicketSystem.Services;
 
-namespace TicketSystem.Services;
-
+//SERVICE TO TRUNCATE STRINGS
 public static class TruncateService
 {
     public static string Truncate(this string value, int maxLength)

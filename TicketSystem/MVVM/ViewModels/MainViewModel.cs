@@ -21,6 +21,7 @@ public partial class MainViewModel : ViewModel
     public RelayCommand NavigateToCreateTicketsViewCommand { get; set; }
     public RelayCommand NavigateToCreateUserViewCommand { get; set; }
     public RelayCommand NavigateToListUsersViewCommand { get; set; }
+    public RelayCommand NavigateToCommentViewCommand { get; set; }
 
     public MainViewModel(INavigationService navService)
     {
@@ -29,5 +30,6 @@ public partial class MainViewModel : ViewModel
         NavigateToCreateTicketsViewCommand = new RelayCommand(execute: o => { Navigation.NavigateTo<CreateTicketViewModel>(); }, canExecute: o => true);
         NavigateToCreateUserViewCommand = new RelayCommand(execute: o => { Navigation.NavigateTo<CreateUserViewModel>(); }, canExecute: o => true);
         NavigateToListUsersViewCommand = new RelayCommand(execute: o => { Navigation.NavigateTo<ListUsersViewModel>(); }, canExecute: o => true);
+        NavigateToCommentViewCommand = new RelayCommand(execute: o => { Navigation.NavigateTo<CommentViewModel>(o); }, canExecute: o => true);
     }
 }

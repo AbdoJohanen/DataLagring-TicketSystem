@@ -16,6 +16,7 @@
 
         <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20" Text="Skapa Användare" Margin="0 0 0 10" />
 
+        <!--USER FORM-->
         <StackPanel Grid.Row="1" Width="400" HorizontalAlignment="Left">
             <Grid Margin="0 0 0 10" >
                 <Grid.ColumnDefinitions>

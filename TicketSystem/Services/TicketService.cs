@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using TicketSystem.Contexts;
-using TicketSystem.Models;
 using TicketSystem.Models.Entities;
 
 namespace TicketSystem.Services;
@@ -42,7 +39,6 @@ internal class TicketService
             context.Remove(ticket);
             await context.SaveChangesAsync();
         }
-
         return ticket!;
     }
 

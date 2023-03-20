@@ -7,9 +7,6 @@ using TicketSystem.Services;
 
 namespace TicketSystem.MVVM.Views;
 
-/// <summary>
-/// Interaction logic for CreateTicketView.xaml
-/// </summary>
 public partial class CreateTicketView : UserControl
 {
     public CreateTicketView()
@@ -19,7 +16,6 @@ public partial class CreateTicketView : UserControl
 
     private async void Btn_Send_Click(object sender, RoutedEventArgs e)
     {
-
         if (!string.IsNullOrEmpty(tb_Email.Text) && !string.IsNullOrEmpty(tb_Subject.Text) && !string.IsNullOrEmpty(tb_Description.Text))
         {
             var _user = await UserService.GetAsync(tb_Email.Text.Trim());
@@ -50,7 +46,6 @@ public partial class CreateTicketView : UserControl
     {
         ClearForm();
     }
-
 
     private void ClearForm()
     {

@@ -7,9 +7,6 @@ using TicketSystem.Services;
 
 namespace TicketSystem.MVVM.Views;
 
-/// <summary>
-/// Interaction logic for CreateUserView.xaml
-/// </summary>
 public partial class CreateUserView : UserControl
 {
     public CreateUserView()
@@ -26,7 +23,6 @@ public partial class CreateUserView : UserControl
             !string.IsNullOrEmpty(tb_PostalCode.Text) &&
             !string.IsNullOrEmpty(tb_City.Text))
         {
-
             if (await UserService.GetAsync(tb_Email.Text) != null)
             {
                 MessageBox.Show("En användare med denna E-postadress existerar redan.", "Error", MessageBoxButton.OK);
@@ -47,7 +43,6 @@ public partial class CreateUserView : UserControl
                 MessageBox.Show("Användaren är skapad.", "Success", MessageBoxButton.OK);
                 ((CreateUserViewModel)DataContext).NavigateToListUsersViewCommand.Execute(null!);
                 ClearForm();
-
             }
         }
         else
@@ -70,6 +65,7 @@ public partial class CreateUserView : UserControl
         tb_City.Text = "";
     }
 
+    //REGEX
     [GeneratedRegex("[^0-9]")]
     private static partial Regex MyRegex();
 }

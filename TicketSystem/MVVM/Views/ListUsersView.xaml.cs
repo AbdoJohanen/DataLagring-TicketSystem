@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using TicketSystem.Models;
 using TicketSystem.MVVM.ViewModels;
@@ -7,9 +6,6 @@ using TicketSystem.Services;
 
 namespace TicketSystem.MVVM.Views;
 
-/// <summary>
-/// Interaction logic for ListUsersView.xaml
-/// </summary>
 public partial class ListUsersView : UserControl
 {
     public ListUsersView()

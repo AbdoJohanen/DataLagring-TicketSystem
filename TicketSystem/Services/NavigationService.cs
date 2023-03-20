@@ -9,7 +9,6 @@ public interface IParametrizedViewModel
     void SetParameter(object parameter);
 }
 
-
 public interface INavigationService
 {
     ViewModel CurrentView { get; }

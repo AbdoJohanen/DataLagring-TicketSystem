@@ -16,5 +16,5 @@ public class AddressEntity
     [Column(TypeName = "nvarchar(100)")]
     public string City { get; set; } = null!;
 
-     public ICollection<UserEntity> Users { get; set; } = new HashSet<UserEntity>();
+    public ICollection<UserEntity> Users { get; set; } = new HashSet<UserEntity>();
 }

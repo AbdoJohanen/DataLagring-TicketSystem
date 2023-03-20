@@ -33,6 +33,7 @@ public class CommentViewModel : ViewModel, IParametrizedViewModel
     }
 
 
+    // sets the SelectedTicket to the object that was passed inside the NavigateToCommentViewCommand from TicketsViewModel
     public void SetParameter(object parameter)
     {
         if(parameter is TicketEntity ticket)

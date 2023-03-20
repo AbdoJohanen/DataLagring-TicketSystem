@@ -1,16 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using TicketSystem.Models.Entities;
 using TicketSystem.MVVM.ViewModels;
 using TicketSystem.Services;
 
 namespace TicketSystem.MVVM.Views;
 
-/// <summary>
-/// Interaction logic for TicketsView.xaml
-/// </summary>
 public partial class TicketsView : UserControl
 {
     public TicketsView()

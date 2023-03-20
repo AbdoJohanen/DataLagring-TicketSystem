@@ -17,7 +17,6 @@ public class TicketEntity
     public string Description { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
 
-
     public int UserId { get; set; }
     public UserEntity User { get; set; } = null!;
 

@@ -16,6 +16,7 @@
         
         <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20" Text="Skapa Ärende" Margin="0 0 0 10" />
         
+        <!--TICKET FORM-->
         <StackPanel Grid.Row="1" Width="400" HorizontalAlignment="Left">
             <TextBlock Text="E-postadress *" />
             <TextBox Name="tb_Email" Padding="3" Margin="0 0 0 10" />

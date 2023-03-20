@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using TicketSystem.Contexts;
 using TicketSystem.Models.Entities;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace TicketSystem.Services;
 

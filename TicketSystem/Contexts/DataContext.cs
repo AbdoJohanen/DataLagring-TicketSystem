@@ -26,6 +26,7 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // OVERRIDE IN ORDER FOR TICKETS AND COMMENTS TO HAVE UserId COLUMN
         modelBuilder.Entity<UserEntity>()
             .HasMany(u => u.Comments)
             .WithOne(c => c.User)

@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using TicketSystem.Models;
 using TicketSystem.Models.Entities;
 using TicketSystem.MVVM.ViewModels;
 using TicketSystem.Services;
 
 namespace TicketSystem.MVVM.Views;
 
-/// <summary>
-/// Interaction logic for CommentView.xaml
-/// </summary>
 public partial class CommentView : UserControl
 {
     public CommentView()
