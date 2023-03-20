@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="TicketSystem.MVVM.Views.CommentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TicketSystem.MVVM.Views"
+             xmlns:entities="clr-namespace:TicketSystem.Models.Entities"
+             xmlns:viewmodels="clr-namespace:TicketSystem.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:CommentViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="900">
+    <Grid Margin="0 0 30 30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Button HorizontalAlignment="Left" Grid.Row="0" Name="Btn_Back" Content="TILLBAKA" Margin="0 0 0 10" Padding="5" Command="{Binding Path=NavigateToTicketsViewCommand}" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0 0 15 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0 0 0 10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Skapad:" FontWeight="Bold" />
+                            <TextBlock Text="{Binding SelectedTicket.CreatedAt, StringFormat=dd/MM-yyyy HH:mm}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                            <TextBlock Text="Användare:" FontWeight="Bold" />
+                            <TextBlock Text="{Binding SelectedTicket.User.Email}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0 0 0 10">
+                            <TextBlock Text="Ärende ID:" FontWeight="Bold" Margin="0 0 5 0" />
+                            <TextBlock Text="{Binding SelectedTicket.Id}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <StackPanel>
+                            <StackPanel HorizontalAlignment="Left" Margin="0 0 0 10">
+                                <TextBlock Text="Ämne:" FontWeight="Bold" />
+                                <TextBlock TextWrapping="Wrap" MaxWidth="400" Text="{Binding SelectedTicket.Subject}"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Beskrivning:" FontWeight="Bold" />
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 0 10" Height="200" HorizontalAlignment="Left">
+                                <TextBlock TextWrapping="Wrap" Text="{Binding SelectedTicket.Description}" />
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0 0 0 10">
+                        <TextBlock FontWeight="Bold" Text="E-postadress *" />
+                        <TextBox Name="tb_Email" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="0 0 0 10">
+                        <TextBlock FontWeight="Bold" Text="Kommentar *" />
+                        <TextBox Name="tb_Comment" TextWrapping="Wrap" AcceptsReturn="True" Height="168"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Name="Btn_Add" Click="Btn_Add_Click" Width="100" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Content="SKAPA" Padding="5" />
+                        <Button Name="Btn_Cancel" Click="Btn_Cancel_Click" Width="100" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Content="AVBRYT" Padding="5" Command="{Binding Path=NavigateToListUsersViewCommand}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+
+
+            <Grid Grid.Column="1" Margin="15 0 0 0">
+                <ListView Name="commentList" ItemsSource="{Binding SelectedTicket.Comments}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="entities:CommentEntity">
+                            <Grid Margin="0 5 0 5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                                        <TextBlock FontWeight="Bold" Text="Användare:" />
+                                        <TextBlock Text="{Binding User.Email}" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                        <TextBlock FontWeight="Bold" Text="Skapad:" />
+                                        <TextBlock Text="{Binding CreatedAt, StringFormat=dd/MM-yyyy HH:mm}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <StackPanel HorizontalAlignment="Left" MaxWidth="{Binding ActualWidth, ElementName=commentList}">
+                                        <TextBlock FontWeight="Bold" Text="Kommentar:" />
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

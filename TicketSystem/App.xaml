@@ -23,35 +23,9 @@
                 <view:ListUsersView/>
             </DataTemplate>
 
-            <Style x:Key="CustomButtonStyle" TargetType="Button">
-                <Setter Property="Width" Value="40"/>
-                <Setter Property="Height" Value="40"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Border Background="White" BorderThickness="1" BorderBrush="Black" CornerRadius="3" Padding="6">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Popup Name="popup" Placement="Bottom" StaysOpen="True">
-                                    <StackPanel Background="White">
-                                        <Button Background="White" BorderBrush="Black" Content="Ej påbörjad" CommandParameter="NotStarted" Margin="5" Padding="3" Command="{Binding ChangeTicketStatusCommand}"/>
-                                        <Button Background="White" BorderBrush="Black" Content="Pågående" CommandParameter="Started" Margin="5" Padding="3" Command="{Binding ChangeTicketStatusCommand}"/>
-                                        <Button Background="White" BorderBrush="Black" Content="Avslutad" CommandParameter="Finished" Margin="5" Padding="3" Command="{Binding ChangeTicketStatusCommand}"/>
-                                    </StackPanel>
-                                </Popup>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="popup" Property="IsOpen" Value="True"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+            <DataTemplate DataType="{x:Type TypeName=viewModel:CommentViewModel}">
+                <view:CommentView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/NavigationDictionary.xaml" />

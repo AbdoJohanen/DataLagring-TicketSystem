@@ -8,54 +8,53 @@ using TicketSystem.Models;
 using TicketSystem.Models.Entities;
 
 namespace TicketSystem.Services;
-
-public class TicketService
+internal class TicketService
 {
-    private readonly static DataContext _context = new();
-
     public static async Task<TicketEntity> SaveAsync(TicketEntity ticketEntity)
     {
-        _context.Add(ticketEntity);
-        await _context.SaveChangesAsync();
+        using var context = new DataContext();
+        context.Add(ticketEntity);
+        await context.SaveChangesAsync();
 
         return ticketEntity;
     }
 
     public static async Task<ObservableCollection<TicketEntity>> GetAllAsync()
     {
-        var tickets = await _context.Tickets.Include(x => x.User).ThenInclude(user => user.Address).ToListAsync();
+        using var context = new DataContext();
+        var tickets = await context.Tickets.Include(x => x.Comments).ThenInclude(comment => comment.User).Include(x => x.User).ThenInclude(user => user.Address).ToListAsync();
         return new ObservableCollection<TicketEntity>(tickets);
     }
 
-    public static async Task<TicketEntity> GetAsync(Func<TicketEntity, bool> predicate)
+    public static async Task<TicketEntity> GetAsync(int id)
     {
-        var _ticketEntity = await _context.Tickets.FindAsync(predicate);
-        if (_ticketEntity != null)
-            return _ticketEntity;
-
-        return null!;
+        using var context = new DataContext();
+        var ticketEntity = await context.Tickets.Include(t => t.Comments).ThenInclude(comment => comment.User).Include(x => x.User).ThenInclude(user => user.Address).FirstOrDefaultAsync(t => t.Id == id);
+        return ticketEntity!;
     }
 
     public static async Task<TicketEntity> DeleteAsync(int id)
     {
-        var ticket = await _context.Tickets.FirstOrDefaultAsync(x => x.Id == id);
+        using var context = new DataContext();
+        var ticket = await context.Tickets.FirstOrDefaultAsync(x => x.Id == id);
         if (ticket != null)
         {
-            _context.Remove(ticket);
-            await _context.SaveChangesAsync();
+            context.Remove(ticket);
+            await context.SaveChangesAsync();
         }
 
-        return null!;
+        return ticket!;
     }
 
     public static async Task<TicketEntity> UpdateStatusAsync(TicketEntity ticket)
     {
-        var _ticketEntity = await _context.Tickets.FirstOrDefaultAsync(x => x.Id == ticket.Id);
-        _ticketEntity!.Status= ticket.Status;
-        
-        _context.Update(_ticketEntity);
-        await _context.SaveChangesAsync();
+        using var context = new DataContext();
+        var ticketEntity = await context.Tickets.FirstOrDefaultAsync(x => x.Id == ticket.Id);
+        ticketEntity!.Status = ticket.Status;
 
-        return null!;
+        context.Update(ticketEntity);
+        await context.SaveChangesAsync();
+
+        return ticketEntity;
     }
 }

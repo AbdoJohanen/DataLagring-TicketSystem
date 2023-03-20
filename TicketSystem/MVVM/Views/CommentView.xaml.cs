@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using TicketSystem.Models;
 using TicketSystem.Models.Entities;
 using TicketSystem.MVVM.ViewModels;
 using TicketSystem.Services;
@@ -8,34 +10,36 @@ using TicketSystem.Services;
 namespace TicketSystem.MVVM.Views;
 
 /// <summary>
-/// Interaction logic for CreateTicketView.xaml
+/// Interaction logic for CommentView.xaml
 /// </summary>
-public partial class CreateTicketView : UserControl
+public partial class CommentView : UserControl
 {
-    public CreateTicketView()
+    public CommentView()
     {
         InitializeComponent();
     }
 
-    private async void Btn_Send_Click(object sender, RoutedEventArgs e)
+    private async void Btn_Add_Click(object sender, RoutedEventArgs e)
     {
+        var button = (Button)sender;
+        var viewModel = button.DataContext as CommentViewModel;
+        TicketEntity ticket = viewModel!.SelectedTicket;
 
-        if (!string.IsNullOrEmpty(tb_Email.Text) && !string.IsNullOrEmpty(tb_Subject.Text) && !string.IsNullOrEmpty(tb_Description.Text))
+        if (!string.IsNullOrEmpty(tb_Email.Text) && !string.IsNullOrEmpty(tb_Comment.Text))
         {
             var _user = await UserService.GetAsync(tb_Email.Text.Trim());
             if (_user != null)
             {
-                var ticket = new TicketEntity
+                var comment = new CommentEntity
                 {
                     UserId = _user.Id,
-                    Status = "Ej påbörjad",
+                    TicketId = ticket.Id,
                     CreatedAt = DateTime.Now,
-                    Subject = tb_Subject.Text.Truncate(50),
-                    Description = tb_Description.Text
+                    Comment = tb_Comment.Text
                 };
-                await TicketService.SaveAsync(ticket);
-                MessageBox.Show("Ärendet är skapat.", "Success", MessageBoxButton.OK);
-                ((CreateTicketViewModel)DataContext).NavigateToTicketsViewCommand.Execute(null!);
+                await CommentService.SaveAsync(comment);
+                MessageBox.Show("Kommentaren är skapad.", "Success", MessageBoxButton.OK);
+                ((CommentViewModel)DataContext).NavigateToTicketsViewCommand.Execute(null!);
                 ClearForm();
             }
             else
@@ -45,9 +49,9 @@ public partial class CreateTicketView : UserControl
             MessageBox.Show("Du måste fylla i fälten.", "Error", MessageBoxButton.OK);
     }
 
-
     private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
     {
+        ((CommentViewModel)DataContext).NavigateToTicketsViewCommand.Execute(null!);
         ClearForm();
     }
 
@@ -55,7 +59,6 @@ public partial class CreateTicketView : UserControl
     private void ClearForm()
     {
         tb_Email.Text = "";
-        tb_Subject.Text = "";
-        tb_Description.Text = "";
+        tb_Comment.Text = "";
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using TicketSystem.Models.Entities;
 using TicketSystem.MVVM.ViewModels;
 using TicketSystem.Services;
@@ -14,7 +16,12 @@ public partial class TicketsView : UserControl
     public TicketsView()
     {
         InitializeComponent();
-        DataContext = new TicketsViewModel();
+        Loaded += TicketsView_Loaded;
+    }
+
+    private async void TicketsView_Loaded(object sender, RoutedEventArgs e)
+    {
+        await ((TicketsViewModel)DataContext).LoadTicketsAsync();
     }
 
     private async void Btn_Remove_Click(object sender, RoutedEventArgs e)
@@ -61,5 +68,10 @@ public partial class TicketsView : UserControl
         ((TicketsViewModel)DataContext).LoadTickets();
     }
 
-
+    private void Btn_Comment_Click(object sender, RoutedEventArgs e)
+    {
+        var button = (Button)sender;
+        var ticket = (TicketEntity)button.DataContext;
+        ((TicketsViewModel)DataContext).NavigateToCommentViewCommand.Execute(ticket);
+    }
 }

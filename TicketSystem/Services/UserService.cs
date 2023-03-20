@@ -10,8 +10,6 @@ namespace TicketSystem.Services;
 
 internal class UserService
 {
-    private readonly static DataContext _context = new();
-
     public static async Task SaveAsync(UserModel user)
     {
         var _userEntity = new UserEntity
@@ -22,6 +20,7 @@ internal class UserService
             PhoneNumber = user.PhoneNumber
         };
 
+        using var _context = new DataContext();
         var _addressEntity = await _context.Addresses.FirstOrDefaultAsync(x => x.StreetName == user.StreetName && x.PostalCode == user.PostalCode && x.City == user.City);
         if (_addressEntity != null)
             _userEntity.AddressId = _addressEntity.Id;
@@ -62,6 +61,7 @@ internal class UserService
 
     public static async Task<UserModel> GetAsync(string email)
     {
+        using var _context = new DataContext();
         var _user = await _context.Users.Include(x => x.Address).FirstOrDefaultAsync(x => x.Email == email);
         if (_user != null)
             return new UserModel
@@ -83,6 +83,7 @@ internal class UserService
 
     public static async Task UpdateAsync(UserModel user)
     {
+        using var _context = new DataContext();
         var _userEntity = await _context.Users.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == user.Id);
         if (_userEntity != null)
         {
@@ -120,6 +121,7 @@ internal class UserService
 
     public static async Task DeleteAsync(string email)
     {
+        using var _context = new DataContext();
         var user = await _context.Users.Include(x => x.Address).FirstOrDefaultAsync(x => x.Email == email);
         if (user != null)
         {

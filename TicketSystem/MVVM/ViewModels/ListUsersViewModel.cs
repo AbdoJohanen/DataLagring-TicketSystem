@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using TicketSystem.Core;
 using TicketSystem.Models;
 using TicketSystem.Services;
@@ -36,12 +38,30 @@ public partial class ListUsersViewModel : ViewModel
         }
     }
 
-    public ListUsersViewModel()
+    private INavigationService _navigation;
+
+    public INavigationService Navigation
     {
+        get => _navigation;
+        set
+        {
+            _navigation = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ListUsersViewModel(INavigationService navigation)
+    {
+        Navigation = navigation;
         LoadUsers();
     }
 
     public async void LoadUsers()
+    {
+        Users = await UserService.GetAllAsync();
+    }
+
+    public async Task LoadUsersAsync()
     {
         Users = await UserService.GetAllAsync();
     }

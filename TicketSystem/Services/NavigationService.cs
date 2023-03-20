@@ -1,15 +1,21 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using TicketSystem.Core;
 using TicketSystem.MVVM.ViewModels;
 
 namespace TicketSystem.Services;
+public interface IParametrizedViewModel
+{
+    void SetParameter(object parameter);
+}
 
 
 public interface INavigationService
 {
     ViewModel CurrentView { get; }
-    void NavigateTo<T>() where T : ViewModel;
+    void NavigateTo<T>(object parameter = null) where T : ViewModel;
 }
+
 public class NavigationService : Core.ObservableObject, INavigationService
 {
     private readonly Func<Type, ViewModel> _viewModelFactory;
@@ -30,9 +36,13 @@ public class NavigationService : Core.ObservableObject, INavigationService
         _viewModelFactory = viewModelFactory;
     }
 
-    public void NavigateTo<TViewModel>() where TViewModel : ViewModel
+    public void NavigateTo<T>(object parameter = null) where T : ViewModel
     {
-        ViewModel viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+        ViewModel viewModel = _viewModelFactory.Invoke(typeof(T));
+        if (viewModel is IParametrizedViewModel parametrizedViewModel)
+        {
+            parametrizedViewModel.SetParameter(parameter);
+        }
         CurrentView = viewModel;
     }
 }

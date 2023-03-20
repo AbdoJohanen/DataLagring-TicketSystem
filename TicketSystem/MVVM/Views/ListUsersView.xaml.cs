@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using TicketSystem.Models;
 using TicketSystem.MVVM.ViewModels;
@@ -14,7 +15,12 @@ public partial class ListUsersView : UserControl
     public ListUsersView()
     {
         InitializeComponent();
-        DataContext = new ListUsersViewModel();
+        Loaded += ListUsersView_Loaded;
+    }
+
+    private async void ListUsersView_Loaded(object sender, RoutedEventArgs e)
+    {
+        await ((ListUsersViewModel)DataContext).LoadUsersAsync();
     }
 
     private async void Btn_Remove_Click(object sender, System.Windows.RoutedEventArgs e)

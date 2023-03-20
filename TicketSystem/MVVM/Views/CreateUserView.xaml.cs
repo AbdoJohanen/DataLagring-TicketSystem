@@ -44,9 +44,10 @@ public partial class CreateUserView : UserControl
                     City = tb_City.Text.Truncate(100)
                 };
                 await UserService.SaveAsync(user);
-                ClearForm();
-                ((CreateUserViewModel)DataContext).NavigateToListUsersViewCommand.Execute(null!);
                 MessageBox.Show("Användaren är skapad.", "Success", MessageBoxButton.OK);
+                ((CreateUserViewModel)DataContext).NavigateToListUsersViewCommand.Execute(null!);
+                ClearForm();
+
             }
         }
         else

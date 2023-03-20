@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using TicketSystem.Core;
 using TicketSystem.Models.Entities;
 using TicketSystem.Services;
@@ -9,10 +10,10 @@ namespace TicketSystem.MVVM.ViewModels;
 
 public partial class TicketsViewModel : ViewModel
 {
-    private INavigationService _navigation;
-
     private ObservableCollection<TicketEntity> _tickets;
     private TicketEntity _selectedTicket;
+
+    private INavigationService _navigation;
 
     public INavigationService Navigation
     {
@@ -25,12 +26,16 @@ public partial class TicketsViewModel : ViewModel
     }
 
     public RelayCommand NavigateToTicketsViewCommand { get; set; }
+    public RelayCommand NavigateToCommentViewCommand { get; set; }
 
 
     public TicketsViewModel(INavigationService navigation)
     {
         Navigation = navigation;
         NavigateToTicketsViewCommand = new RelayCommand(execute: o => { Navigation.NavigateTo<TicketsViewModel>(); }, canExecute: o => true);
+        NavigateToCommentViewCommand = new RelayCommand(execute: o => { Navigation.NavigateTo<CommentViewModel>(o); }, canExecute: o => true);
+
+        LoadTickets();
     }
 
 
@@ -52,9 +57,9 @@ public partial class TicketsViewModel : ViewModel
         Tickets = await TicketService.GetAllAsync();
     }
 
-    public TicketsViewModel()
+    public async Task LoadTicketsAsync()
     {
-        LoadTickets();
+        Tickets = await TicketService.GetAllAsync();
     }
 
     public TicketEntity SelectedTicket
@@ -70,3 +75,4 @@ public partial class TicketsViewModel : ViewModel
         }
     }
 }
+

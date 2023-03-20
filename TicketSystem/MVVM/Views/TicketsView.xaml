@@ -4,14 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TicketSystem.MVVM.Views"
-             xmlns:models="clr-namespace:TicketSystem.Models"
              xmlns:entities="clr-namespace:TicketSystem.Models.Entities"
              xmlns:viewmodels="clr-namespace:TicketSystem.MVVM.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:TicketsViewModel}"
-             xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="0 0 0 30">
+             d:DesignHeight="500" d:DesignWidth="900">
+    <Grid Margin="0 0 30 30">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
@@ -55,6 +53,7 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <Button Name="Btn_Comment" Click="Btn_Comment_Click" Content="&#xf075;" Style="{StaticResource navButton}" Height="45" Width="40" Margin="0 5 0 0" />
                                 <Button Name="Btn_Remove" Click="Btn_Remove_Click" Content="&#xf1f8;" Style="{StaticResource navButton}" Height="45" Width="40" Margin="0 5 0 0" />
                             </StackPanel>
                         </Grid>
@@ -85,7 +84,9 @@
                         <TextBlock Text="Ärende ID:" FontWeight="Bold" Margin="0 0 5 0" />
                         <TextBlock Text="{Binding SelectedTicket.Id}"/>
                     </StackPanel>
-                        <TextBlock Grid.Column="1" Text="Ändra status:" FontWeight="Bold" Margin="0 0 5 0" />
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                        <TextBlock Text="Ändra status:" FontWeight="Bold" Margin="0 0 5 0" />
+                    </StackPanel>
                 </Grid>
 
 
@@ -100,7 +101,7 @@
                         <TextBlock Text="{Binding SelectedTicket.CreatedAt, StringFormat=dd/MM-yyyy HH:mm}" Margin="0 0 0 10"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Background="White" Content="Ej påbörjad" Name="Btn_NotStarted" Click="Btn_NotStarted_Click" Margin="0 5 5 5" />
                         <Button Background="White" Content="Påbörjad" Name="Btn_TicketStarted" Click="Btn_TicketStarted_Click" Margin="0 5 5 5" />
                         <Button Background="White" Content="Avslutad" Name="Btn_TicketClosed" Click="Btn_TicketClosed_Click" Margin="0 5 0 5" />
@@ -111,12 +112,16 @@
                 
                 <TextBlock Text="Användare:" FontWeight="Bold" />
                 <TextBlock Text="{Binding SelectedTicket.User.Email}" Margin="0 0 0 10"/>
-                
-                <TextBlock Text="Ämne:" FontWeight="Bold" />
-                <TextBlock TextWrapping="Wrap" MaxWidth="400" Text="{Binding SelectedTicket.Subject}" Margin="0 0 0 10"/>
+
+                <StackPanel HorizontalAlignment="Left" Margin="0 0 0 10">
+                    <TextBlock Text="Ämne:" FontWeight="Bold" />
+                    <TextBlock TextWrapping="Wrap" MaxWidth="400" Text="{Binding SelectedTicket.Subject}"/>
+                </StackPanel>
 
                 <TextBlock Text="Beskrivning:" FontWeight="Bold" />
-                <TextBlock TextWrapping="Wrap" MaxWidth="400" Text="{Binding SelectedTicket.Description}" Margin="0 0 0 10"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 0 10" Height="500" HorizontalAlignment="Left">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding SelectedTicket.Description}" Margin="0 0 0 10"/>
+                </ScrollViewer>
             </StackPanel>
         </Grid>
     </Grid>
